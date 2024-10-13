@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.homework_five.R
 import com.example.homework_five.databinding.ActivityCheatBinding
@@ -14,7 +15,9 @@ const val EXTRA_ANSWER_SHOWN = "com.example.homework_five.answer_shown"
 class CheatActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCheatBinding
+    private val cheatViewModel: CheatViewModel by viewModels()
     private var answerIsTrue = false
+    private var answerText = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,13 +26,21 @@ class CheatActivity : AppCompatActivity() {
 
         answerIsTrue = intent.getBooleanExtra(EXTRA_ANSWER_IS_TRUE, false)
 
+
+        answerText = when {
+            answerIsTrue -> R.string.true_button
+            else -> R.string.false_button
+        }
+
         binding.showAnswerButton.setOnClickListener {
-            val answerText = when {
-                answerIsTrue -> R.string.true_button
-                else -> R.string.false_button
-            }
             binding.answerTextView.setText(answerText)
-            setAnswerShownResult(true)
+            cheatViewModel.isAnswerShown = true
+            setAnswerShownResult(cheatViewModel.isAnswerShown)
+        }
+
+        if (cheatViewModel.isAnswerShown) {
+            binding.answerTextView.setText(answerText)
+            setAnswerShownResult(cheatViewModel.isAnswerShown)
         }
     }
 

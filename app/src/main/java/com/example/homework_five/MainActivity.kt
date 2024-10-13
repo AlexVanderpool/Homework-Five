@@ -4,6 +4,7 @@ import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -46,7 +47,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.nextButton.setOnClickListener {
             Log.d(TAG, "binding.nextButton.setOnClickListener")
-            quizViewModel.moveToNext() //use moveToNext from QuizViewModel class to traverse questions
+            quizViewModel.moveToNext()
             updateQuestion()
         }
 
