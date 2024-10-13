@@ -21,7 +21,6 @@ class MainActivity : AppCompatActivity() {
     private val cheatLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
-        // Handle the result
         if (result.resultCode == Activity.RESULT_OK) {
             quizViewModel.isCheater =
                 result.data?.getBooleanExtra(EXTRA_ANSWER_SHOWN, false) ?: false
@@ -60,12 +59,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateQuestion(){
-        //use currentQuestionText value to set text for next question
         val questionTextResId = quizViewModel.currentQuestionText
         binding.questionTextView.setText(questionTextResId)
     }
     private fun checkAnswer(userAnswer:Boolean) {
-        //use currentQuestionAnswer value to check answer
         val correctAnswer = quizViewModel.currentQuestionAnswer
         val messageResId = when {
             quizViewModel.isCheater -> R.string.judgment_toast
