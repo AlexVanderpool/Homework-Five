@@ -7,7 +7,7 @@ import com.example.homework_five.R
 
 private const val TAG = "QuizViewModel"
 const val CURRENT_INDEX_KEY = "CURRENT_INDEX_KEY"
-const val IS_CHEATER_KEY = "IS_CHEATER_KEY"
+
 class QuizViewModel(private val savedStateHandle: SavedStateHandle) : ViewModel() {
 
     private val questionBank = listOf(
@@ -19,9 +19,6 @@ class QuizViewModel(private val savedStateHandle: SavedStateHandle) : ViewModel(
         Question(R.string.question_asia, true)
     )
 
-    var isCheater: Boolean
-        get() = savedStateHandle.get(IS_CHEATER_KEY) ?: false
-        set(value) = savedStateHandle.set(IS_CHEATER_KEY, value)
 
     var currentIndex: Int
         get() = savedStateHandle.get(CURRENT_INDEX_KEY) ?: 0
@@ -33,9 +30,16 @@ class QuizViewModel(private val savedStateHandle: SavedStateHandle) : ViewModel(
     val currentQuestionText: Int
         get() = questionBank[currentIndex].textResId
 
+    val currentQuestionCheated: Boolean
+        get() = questionBank[currentIndex].userCheat
+
     fun moveToNext() {
         Log.d(TAG, "Updating question text")
         currentIndex = (currentIndex + 1) % questionBank.size
         Log.d(TAG, "Current question index: $currentIndex")
     }
+    fun updateUserCheatedOnCurrentQuestion() {
+        questionBank[currentIndex].userCheat = true
+    }
+
 }

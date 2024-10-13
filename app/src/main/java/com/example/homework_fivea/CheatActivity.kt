@@ -27,20 +27,14 @@ class CheatActivity : AppCompatActivity() {
         answerIsTrue = intent.getBooleanExtra(EXTRA_ANSWER_IS_TRUE, false)
 
 
-        answerText = when {
-            answerIsTrue -> R.string.true_button
-            else -> R.string.false_button
-        }
-
         binding.showAnswerButton.setOnClickListener {
-            binding.answerTextView.setText(answerText)
-            cheatViewModel.isAnswerShown = true
-            setAnswerShownResult(cheatViewModel.isAnswerShown)
-        }
+            answerText = when {
+                answerIsTrue -> R.string.true_button
+                else -> R.string.false_button
+            }
 
-        if (cheatViewModel.isAnswerShown) {
             binding.answerTextView.setText(answerText)
-            setAnswerShownResult(cheatViewModel.isAnswerShown)
+            setAnswerShownResult(true)
         }
     }
 
